@@ -223,7 +223,7 @@ echo "------------------------------------"
 # Loop through each setting option
 for setting in "${setting_options[@]}"; do
   echo "Running test for setting: ${setting}"
-  python tracking/test_streaming.py ostrack esot500_baseline "${setting}" --dataset_name esot500s --runid 66 --use_aas
+  python tracking/test_streaming.py ostrack esot500_baseline "${setting}" --dataset_name esot500s --runid 66 --use_cas
   python tracking/streaming_eval_v4.py ostrack esot500_baseline "${setting}" --dataset_name esot500s --runid 66
   echo "------------------------------------"
 done
@@ -259,7 +259,7 @@ echo "------------------------------------"
 # Loop through each setting option
 for setting in "${setting_options[@]}"; do
   echo "Running test for setting: ${setting}"
-  python tracking/test_streaming.py ostrack pred_esot500_4step "${setting}" --dataset_name esot500s --pred_next 1 --runid 66 --use_aas
+  python tracking/test_streaming.py ostrack pred_esot500_4step "${setting}" --dataset_name esot500s --pred_next 1 --runid 66 --use_cas
   python tracking/streaming_predspeed.py ostrack pred_esot500_4step "${setting}" --dataset_name esot500s --runid 66
   echo "------------------------------------"
 done
