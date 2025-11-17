@@ -115,8 +115,7 @@ Please refer to the paper for more details.
 
 ## Model Enhancement Strategies
 
-We derive two biologically inspired principles: Predictive Motion Extrapolation
-104 and Context-Aware Sampling.
+We derive two model enhancement strategies: Asynchronous Tracking and Context-Aware Sampling.
 
 Please refer to the paper for more details.
 
