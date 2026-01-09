@@ -4,7 +4,7 @@
 
 Neuromorphic vision systems process continuous event streams and offer transformative potential for real-time applications. However, their evaluation remains tethered to methodologies from RGB imaging. These approaches convert asynchronous event streams into synchronized frames and ignore perception latency, creating a critical gap between benchmarks and real-world performance. To address this, we introduce the STream-based lAtency-awaRe Evaluation (STARE) framework.
 STARE integrates two core components: Continuous Sampling, maximizing model throughput to reduce the impact of latency, and Latency-Aware Evaluation, quantifying latency-induced online accuracy.
-To rigorously validate STARE, we developed ESOT500, a high-dynamic object tracking dataset with 500 Hz annotations. Experiments reveal that latency severely degrades online accuracy by over 50.
+To rigorously validate STARE, we developed ESOT500, a high-dynamic object tracking dataset with 500 Hz annotations. Experiments reveal that latency severely degrades online accuracy by over 50%.
 We further introduce two model enhancement strategies: Asynchronous Tracking, a fast-slow architecture that boosts model throughput, and Context-Aware Sampling, which dynamically adapts input to handle low event density cases. Overall, our work bridges the latency gap between models' theoretical potential and real-world deployment.
 <br>
 
