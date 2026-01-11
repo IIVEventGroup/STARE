@@ -443,6 +443,8 @@ bash lib/stare.sh 2>&1 | tee stare.log
 
 After this, you can use the corresponding Jupyter Notebook (Pytracking tracker:`/pytracking/analysis/analysis_results_all.ipynb` or SOTAs tracker:`/lib/test/analysis/analysis_results_demo.ipynb`) to evaluate the results.
 
+Note: Due to variations in hardware specifications (e.g., GPU models) and the configuration of extra trackers, the reproduced results may differ slightly from those reported in the paper.
+
 <br><br>
 
 ## Support
