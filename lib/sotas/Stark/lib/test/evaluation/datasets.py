@@ -69,6 +69,10 @@ dataset_dict = dict(
                             kwargs=dict(split='test', fps=500, window=20)),
     esot_500_50=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
                             kwargs=dict(split='test', fps=500, window=50)),
+    esot_500_100=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
+                             kwargs=dict(split='test', fps=500, window=100)),
+    esot_500_150=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
+                             kwargs=dict(split='test', fps=500, window=150)),
 
     esot_250_2=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
                            kwargs=dict(split='test', fps=250, window=2)),
@@ -80,6 +84,10 @@ dataset_dict = dict(
                             kwargs=dict(split='test', fps=250, window=20)),
     esot_250_50=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
                             kwargs=dict(split='test', fps=250, window=50)),
+    esot_250_100=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
+                             kwargs=dict(split='test', fps=250, window=100)),
+    esot_250_150=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
+                             kwargs=dict(split='test', fps=250, window=150)),
 
     esot_125_2=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
                            kwargs=dict(split='test', fps=125, window=2)),
@@ -113,6 +121,10 @@ dataset_dict = dict(
                            kwargs=dict(split='test', fps=20, window=20)),
     esot_20_50=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
                            kwargs=dict(split='test', fps=20, window=50)),
+    esot_20_100=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
+                            kwargs=dict(split='test', fps=20, window=100)),
+    esot_20_150=DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",
+                            kwargs=dict(split='test', fps=20, window=150)),
 
     rgbsdemo = DatasetInfo(module=pt % "DemoData", class_name="rgbsDemo",  kwargs=dict(split='test')),
     eventsdemo = DatasetInfo(module=pt % "DemoData", class_name="EventDemo",  kwargs=dict(split='test')),

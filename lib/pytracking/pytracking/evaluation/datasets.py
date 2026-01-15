@@ -13,7 +13,8 @@ dataset_dict = dict(
     visevent_presence = DatasetInfo(module=pt % "visevent", class_name="VisEventDataset", kwargs=dict(split='test',version='presence')),
     visevent_172 = DatasetInfo(module=pt % "visevent", class_name="VisEventDataset", kwargs=dict(split='test',version='172')),
     eventcarla = DatasetInfo(module=pt % "eventcarla", class_name="EventCarlaDataset",  kwargs=dict(split='test')),
-    
+
+    # ESOT500-L datasets
     esot_500_2 = DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",  kwargs=dict(split='test',fps=500,window=2)),
     esot_500_4 = DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",  kwargs=dict(split='test',fps=500,window=4)),
     esot_500_8 = DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",  kwargs=dict(split='test',fps=500,window=8)),
@@ -52,9 +53,11 @@ dataset_dict = dict(
 
     esot500 = DatasetInfo(module=pt % "esot500", class_name="ESOT500Dataset",  kwargs=dict(split='test',fps=500)),
     esot_challenging = DatasetInfo(module=pt % "esot500Challenging", class_name="ESOT500DatasetChallenging", kwargs=dict(split='test')),
+
+    # ESOT500-H datasets
+    esot500s = DatasetInfo(module=pt % "esot500Stream", class_name="ESOT500DatasetStream",  kwargs=dict(split='test')),
     esot500s_cas=DatasetInfo(module=pt % "esot500Stream", class_name="ESOT500DatasetStream", kwargs=dict(split='cas')),
 
-    esot500s = DatasetInfo(module=pt % "esot500Stream", class_name="ESOT500DatasetStream",  kwargs=dict(split='test')),
     esot500hs = DatasetInfo(module=pt % "esot500Stream", class_name="ESOT500HDatasetStream",  kwargs=dict(split='test')),
     esot500hs_cas = DatasetInfo(module=pt % "esot500Stream", class_name="ESOT500HDatasetStream", kwargs=dict(split='cas')),
 
