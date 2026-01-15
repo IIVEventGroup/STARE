@@ -18,7 +18,7 @@ def _save_tracker_output(seq: Sequence, tracker: Tracker, output: dict, stream_s
     if not os.path.exists(tracker.results_dir):
         os.makedirs(tracker.results_dir)
 
-    if seq.dataset in ['esot500s', 'esot2s']:
+    if seq.dataset in ['esot500s', 'esot500hs']:
         save_dir = os.path.join(tracker.results_dir_rt, str(stream_setting.id))
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
@@ -108,7 +108,7 @@ def _save_tracker_output(seq: Sequence, tracker: Tracker, output: dict, stream_s
                 save_time(timings_file, data)
 
 
-def run_sequence(seq: Sequence, tracker: Tracker, debug=False, num_gpu=8):
+def run_sequence(seq: Sequence, tracker: Tracker, debug=False, num_gpu=1):
     """Runs a tracker on a sequence."""
     '''2021.1.2 Add multiple gpu support'''
     try:
@@ -165,7 +165,7 @@ def run_sequence_stream(seq: Sequence, tracker: Tracker, stream_setting, debug=F
     """Runs a tracker on a sequence."""
 
     def _results_exist():
-        if seq.dataset in ['esot500s','esot2s']:
+        if seq.dataset in ['esot500s','esot500hs']:
             bbox_file = '{}/{}/{}.pkl'.format(tracker.results_dir_rt, stream_setting.id, seq.name)
             return os.path.isfile(bbox_file)
         elif seq.object_ids is None:
@@ -220,7 +220,7 @@ def run_sequence_stream(seq: Sequence, tracker: Tracker, stream_setting, debug=F
     if not debug:
         _save_tracker_output(seq, tracker, output, stream_setting)
 
-def run_dataset(dataset, trackers, debug=False, threads=0, num_gpus=8):
+def run_dataset(dataset, trackers, debug=False, threads=0, num_gpus=1):
     """Runs a list of trackers on a dataset.
     args:
         dataset: List of Sequence instances, forming a dataset.

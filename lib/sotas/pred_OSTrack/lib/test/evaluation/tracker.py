@@ -33,7 +33,7 @@ class Tracker:
         display_name: Name to be displayed in the result plots.
     """
 
-    def __init__(self, name: str, parameter_name: str, dataset_name: str, run_id: int = None, pred_next: int = 0, use_aas: bool = False, display_name: str = None,
+    def __init__(self, name: str, parameter_name: str, dataset_name: str, run_id: int = None, pred_next: int = 0, use_cas: bool = False, display_name: str = None,
                  result_only=False):
         assert run_id is None or isinstance(run_id, int)
 
@@ -41,7 +41,7 @@ class Tracker:
         self.parameter_name = parameter_name
         self.dataset_name = dataset_name
         self.run_id = run_id
-        self.use_aas = use_aas
+        self.use_cas = use_cas
         self.display_name = display_name
 
         self.env = env_settings()
@@ -57,6 +57,7 @@ class Tracker:
             self.results_dir_rt = '{}/{}/{}_{:03d}'.format(self.env.results_path_rt, self.name, self.parameter_name,self.run_id)
             self.results_dir_rt_final = '{}/{}/{}_{:03d}'.format(self.env.results_path_rt_final, self.name, self.parameter_name, self.run_id)
             self.segmentation_dir = '{}/{}/{}_{:03d}'.format(self.env.segmentation_path, self.name, self.parameter_name, self.run_id)
+
         if result_only:
             self.results_dir = '{}/{}'.format(self.env.results_path, self.name)
 
@@ -67,6 +68,7 @@ class Tracker:
             self.tracker_class = tracker_module.get_tracker_class()
         else:
             self.tracker_class = None
+
         self.visdom = None
 
     def create_tracker(self, params):
@@ -102,7 +104,7 @@ class Tracker:
         init_info = seq.init_info()
 
         tracker = self.create_tracker(params)
-        if seq.dataset in ['esot500s','esot2s']:
+        if seq.dataset in ['esot500s','esot500hs']:
             output = self._track_evstream(tracker, seq, init_info, stream_setting, pred_next)
         else:
             output = self._track_sequence(tracker, seq, init_info)
@@ -136,7 +138,7 @@ class Tracker:
                     output[key].append(val)
 
         # Initialize
-        image = self._read_image(seq.frames[0]) # NOTE: For temporary test
+        image = self._read_image(seq.frames[0])  # NOTE: For temporary test
 
         start_time = time.time()
         out = tracker.initialize(image, init_info)
@@ -146,6 +148,7 @@ class Tracker:
         prev_output = OrderedDict(out)
         init_default = {'target_bbox': init_info.get('init_bbox'),
                         'time': time.time() - start_time}
+
         if tracker.params.save_all_boxes:
             init_default['all_boxes'] = out['all_boxes']
             init_default['all_scores'] = out['all_scores']
@@ -202,9 +205,9 @@ class Tracker:
 
         aeFile = seq.events
         with AedatFile(aeFile) as f:
-            print('Processing:',aeFile)
+            print('Processing:', aeFile)
             events = np.hstack([packet for packet in f['events'].numpy()])
-            events['timestamp'] = events['timestamp'] -events['timestamp'][0]
+            events['timestamp'] = events['timestamp'] - events['timestamp'][0]
 
         timestamps = events['timestamp']
         #TODO: adjust timestamps to seconds
@@ -218,6 +221,11 @@ class Tracker:
         runtime = []
         out_timestamps = []
         t_stream_total = timestamps[-1]
+
+        if seq.dataset == 'esot500hs':
+            height, width = 720, 1280
+        else:
+            height, width = 260, 346
 
         #########################################################################################
         active_state = {
@@ -243,9 +251,8 @@ class Tracker:
             return res
         #########################################################################################
 
-
         # Initialize
-        # t_start = perf_counter()*1e6
+        # t_start = perf_counter() * 1e6
         t_left = 0
         idx_start = 0
         t0 = perf_counter() * 1e6
@@ -284,7 +291,9 @@ class Tracker:
                 template_events = sampling_template_egt(events, init_info)
         else:
             raise NotImplementedError
-        event_rep = convert_event_img_aedat(template_events,stream_setting.representation)
+
+        event_rep = convert_event_img_aedat(template_events, stream_setting.representation, height, width)
+
         '''JieChu:
         t_convert record the couvert time of the template frame.
         '''
@@ -297,8 +306,9 @@ class Tracker:
                 event_img = event_rep
                 self.visualize(event_img, init_info.get('init_bbox'))
             elif stream_setting.representation in ['Raw']:
-                event_img = convert_event_img_aedat(template_events_raw,'VoxelGridComplex')
+                event_img = convert_event_img_aedat(template_events, stream_setting.representation, height, width)
                 self.visualize(event_img, init_info.get('init_bbox'))
+
         torch.cuda.synchronize()
         t1 = t_start = perf_counter()*1e6
         out = tracker.initialize(event_rep, init_info)
@@ -372,7 +382,7 @@ class Tracker:
                 # convert format for egt
                 event_rep = sampling_search_egt(events_search)
             else:
-                event_rep = convert_event_img_aedat(events_search,stream_setting.representation)
+                event_rep = convert_event_img_aedat(template_events, stream_setting.representation, height, width)
             info = {} # changed
 
             # info['previous_output'] = prev_output
@@ -424,7 +434,7 @@ class Tracker:
             # pred_bboxes.append(pred_bbox) # box [x1, y1, w, h]
 
             ################################################################################
-            if not self.use_aas:
+            if not self.use_cas:
                 active_state['is_last_activated'] = True
 
             pred_bbox = out['target_bbox']
@@ -458,7 +468,7 @@ class Tracker:
             if stream_setting.representation in ['VoxelGridComplex']:
                 event_img = event_rep
             elif stream_setting.representation =='Raw':
-                event_img = convert_event_img_aedat(events_search, 'VoxelGridComplex')
+                event_img = convert_event_img_aedat(template_events, stream_setting.representation, height, width)
 
             if self.visdom is not None:
                 tracker.visdom_draw_tracking(event_img, bboxes, segmentation)
