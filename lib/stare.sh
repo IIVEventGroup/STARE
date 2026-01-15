@@ -249,7 +249,7 @@ echo "------------------------------------"
 for setting in "${setting_options[@]}"; do
   echo "Running test for setting: ${setting}"
   python tracking/test_streaming.py ostrack pred_esot500_4step "${setting}" --dataset_name esot500s --pred_next 1
-  python tracking/streaming_eval_v4.py ostrack pred_esot500_4step "${setting}" --dataset_name esot500s
+  python tracking/streaming_predspeed.py ostrack pred_esot500_4step "${setting}" --dataset_name esot500s
   echo "------------------------------------"
 done
 
