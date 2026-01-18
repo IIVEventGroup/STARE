@@ -306,7 +306,7 @@ class Tracker:
                 event_img = event_rep
                 self.visualize(event_img, init_info.get('init_bbox'))
             elif stream_setting.representation in ['Raw']:
-                event_img = convert_event_img_aedat(template_events, stream_setting.representation, height, width)
+                event_img = convert_event_img_aedat(template_events, 'VoxelGridComplex', height, width)
                 self.visualize(event_img, init_info.get('init_bbox'))
 
         torch.cuda.synchronize()
@@ -468,7 +468,7 @@ class Tracker:
             if stream_setting.representation in ['VoxelGridComplex']:
                 event_img = event_rep
             elif stream_setting.representation =='Raw':
-                event_img = convert_event_img_aedat(template_events, stream_setting.representation, height, width)
+                event_img = convert_event_img_aedat(template_events, 'VoxelGridComplex', height, width)
 
             if self.visdom is not None:
                 tracker.visdom_draw_tracking(event_img, bboxes, segmentation)
