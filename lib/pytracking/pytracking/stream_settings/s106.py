@@ -55,6 +55,14 @@ def parameters():
         'ostrack_esot500_baseline_10000': 8.5 * 1e3,
         'ostrack_esot500_baseline': 8.5 * 1e3,
         'ostrack_pred_esot500_4step': 9.5 * 1e3,
+        'async_ostrack_esot500_mix_async_freezing_150_w_pretrain': 14.3 * 1e3,
+        'async_ostrack_esot500_mix_async_freezing_150_w_pretrain_slow': 14.3 * 1e3,
+        'async_ostrack_esot500_mix_async_freezing_150_w_pretrain_fast': 5.3 * 1e3,
+        'async_ostrack_esot500_mix_async_freezing_150_w_pretrain_fast_slow_diff': 3.7 * 1e3,
+        'async_ostrack_esot500_020_async_freezing_150_w_pretrain': 14.3 * 1e3,
+        'async_ostrack_esot500_020_async_freezing_150_w_pretrain_slow': 14.3 * 1e3,
+        'async_ostrack_esot500_020_async_freezing_150_w_pretrain_fast': 5.3 * 1e3,
+        'async_ostrack_esot500_020_async_freezing_150_w_pretrain_fast_slow_diff': 3.7 * 1e3,
         # mixformer
         'mixformer_convmae_online_baseline': 15 * 1e3,
         'mixformer_convmae_pred_esot500': 16 * 1e3,
@@ -107,6 +115,8 @@ def parameters():
         'ostrack_esot500_baseline_10000': 1 * 1e3,
         'ostrack_esot500_baseline': 1 * 1e3,
         'ostrack_pred_esot500_4step': 1 * 1e3,
+        'async_ostrack_esot500_mix_async_freezing_150_w_pretrain': 1 * 1e3,
+        'async_ostrack_esot500_020_async_freezing_150_w_pretrain': 1 * 1e3,
         # mixformer
         'mixformer_convmae_online_baseline': 26 * 1e3,
         'mixformer_convmae_pred_esot500': 26 * 1e3,

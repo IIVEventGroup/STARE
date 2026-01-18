@@ -80,8 +80,8 @@ def main():
     parser.add_argument('--tracker_name', type=str, default="ostrack", help='tracker name')
     parser.add_argument('--parameter_name', type=str, default="esot500mix", help='parameter name')
 
-    # parser.add_argument('--images-folder', type=str, default="/media/blank/WD0/Datasets/STARE/data/ESOT500/500/airplane5/VoxelGridComplex", help='Path to the original image folder')
-    # parser.add_argument('--save-dir', type=str, default="/media/blank/WD0/Datasets/STARE/lib/pytracking/pytracking/output/vis", help='Directory to save visualization results')
+    # parser.add_argument('--images-folder', type=str, default="/PATH_TO_STARE/data/ESOT500/500/airplane5/VoxelGridComplex", help='Path to the original image folder')
+    # parser.add_argument('--save-dir', type=str, default="/PATH_TO_STARE/lib/pytracking/pytracking/output/vis", help='Directory to save visualization results')
 
     args = parser.parse_args()
 

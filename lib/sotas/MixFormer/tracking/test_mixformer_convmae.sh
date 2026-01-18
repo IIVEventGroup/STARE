@@ -47,10 +47,6 @@
 #python tracking/analysis_results.py --dataset_name otb --tracker_param baseline_large
 
 ### ESOT
-# python tracking/test.py mixformer_convmae_online baseline --dataset esot2s --threads 0 --num_gpus 1 --params__model mixformer_convmae_base_online.pth.tar --params__search_area_scale 4.8
-# python tracking/analysis_results.py --dataset_name esot2s --tracker_param baseline
-
-# python tracking/test.py mixformer_convmae_online baseline --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
 
 # python tracking/test.py mixformer_convmae_online baseline --dataset esot_250_2 --params__model mixformer_convmae_base_online.pth.tar
 # python tracking/test.py mixformer_convmae_online baseline --dataset esot_20_2 --params__model mixformer_convmae_base_online.pth.tar
@@ -62,20 +58,9 @@
 # python tracking/test.py mixformer_convmae_online baseline --dataset esot_250_20 --params__model mixformer_convmae_base_online.pth.tar
 # python tracking/test.py mixformer_convmae_online baseline --dataset esot_20_20 --params__model mixformer_convmae_base_online.pth.tar
 
-# python tracking/test.py mixformer_convmae_online baseline --dataset esot2_default --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test.py mixformer_convmae_online baseline --dataset esot2_2_20 --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test.py mixformer_convmae_online baseline --dataset esot2_5_20 --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test.py mixformer_convmae_online baseline --dataset esot2_10_20 --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test.py mixformer_convmae_online baseline --dataset esoth --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test.py mixformer_convmae_online baseline --dataset esotm --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test.py mixformer_convmae_online baseline --dataset esotl --params__model mixformer_convmae_base_online.pth.tar
-
 ###streaming
 # python tracking/test_streaming.py mixformer_convmae_online baseline s1 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s1 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
 # python tracking/test_streaming.py mixformer_convmae_online baseline s2 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s2 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-
 # python tracking/test_streaming.py mixformer_convmae_online baseline s3 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar
 # python tracking/test_streaming.py mixformer_convmae_online baseline s4 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar
 # python tracking/test_streaming.py mixformer_convmae_online baseline s5 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar
@@ -85,17 +70,6 @@
 # python tracking/test_streaming.py mixformer_convmae_online baseline s9 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar
 # python tracking/test_streaming.py mixformer_convmae_online baseline s18 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar
 
-# python tracking/test_streaming.py mixformer_convmae_online baseline s3 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s4 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s5 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s6 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s7 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s8 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-# python tracking/test_streaming.py mixformer_convmae_online baseline s9 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar
-
-python tracking/test_streaming.py mixformer_convmae_online baseline s18 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar --runid 0
-python tracking/test_streaming.py mixformer_convmae_online baseline s18 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar --runid 1
-python tracking/test_streaming.py mixformer_convmae_online baseline s18 --dataset esot2s --params__model mixformer_convmae_base_online.pth.tar --runid 2
 python tracking/test_streaming.py mixformer_convmae_online baseline s18 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar --runid 0
 python tracking/test_streaming.py mixformer_convmae_online baseline s18 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar --runid 1
 python tracking/test_streaming.py mixformer_convmae_online baseline s18 --dataset esot500s --params__model mixformer_convmae_base_online.pth.tar --runid 2
