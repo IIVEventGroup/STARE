@@ -155,3 +155,10 @@ def get_dataset(*args):
     for name in args:
         dset.extend(load_dataset(name))
     return dset
+
+def get_datasets(args):
+    """ Get a single or set of datasets."""
+    dset = SequenceList()
+    for name in args:
+        dset.extend(load_dataset(name))
+    return dset

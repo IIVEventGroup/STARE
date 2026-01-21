@@ -88,7 +88,8 @@ def visualize_bboxes(gt_file, output_file, images_folder, output_folder):
             parts = line.strip().split()
             if len(parts) >= 5:  # Ensure at least 5 values (time, x, y, w, h)
                 time = float(parts[0])
-                x, y, w, h = map(int, parts[1:5])
+                # x, y, w, h = map(int, parts[1:5])
+                x, y, w, h = [int(round(float(v))) for v in parts[1:5]]
                 gt_bboxes.append((time, x, y, w, h))
     
     # Read output file
@@ -97,7 +98,8 @@ def visualize_bboxes(gt_file, output_file, images_folder, output_folder):
         for line in f:
             parts = line.strip().split()
             if len(parts) >= 4:  # Ensure at least 4 values (x, y, w, h)
-                x, y, w, h = map(int, parts[:4])
+                # x, y, w, h = map(int, parts[:4])
+                x, y, w, h = [int(round(float(v))) for v in parts[:4]]
                 output_bboxes.append((x, y, w, h))
     
     # Ensure the number of bounding boxes in both files is equal
@@ -152,14 +154,124 @@ def visualize_bboxes(gt_file, output_file, images_folder, output_folder):
     
     print("Visualization complete! Results saved in:", output_folder)
 
+
+def visualize_bboxes_cmp(gt_file, output_file_pred, output_file_pro, images_folder, output_folder):
+    """
+    Visualize ground truth and predicted bounding boxes
+
+    Parameters:
+    - gt_file: Path to the ground truth file
+    - output_file: Path to the prediction file
+    - images_folder: Path to the image folder
+    - output_folder: Path to the output image folder
+    """
+    # Create output folder if it doesn't exist
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # Read ground truth file
+    gt_bboxes = []
+    with open(gt_file, 'r') as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) >= 5:  # Ensure at least 5 values (time, x, y, w, h)
+                time = float(parts[0])
+                # x, y, w, h = map(int, parts[1:5])
+                x, y, w, h = [int(round(float(v))) for v in parts[1:5]]
+                gt_bboxes.append((time, x, y, w, h))
+
+    # Read output file
+    output_bboxes_pred = []
+    with open(output_file_pred, 'r') as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) >= 4:  # Ensure at least 4 values (x, y, w, h)
+                # x, y, w, h = map(int, parts[:4])
+                x, y, w, h = [int(round(float(v))) for v in parts[:4]]
+                output_bboxes_pred.append((x, y, w, h))
+
+    output_bboxes_cas = []
+    with open(output_file_pro, 'r') as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) >= 4:  # Ensure at least 4 values (x, y, w, h)
+                # x, y, w, h = map(int, parts[:4])
+                x, y, w, h = [int(round(float(v))) for v in parts[:4]]
+                output_bboxes_cas.append((x, y, w, h))
+
+    # Ensure the number of bounding boxes in both files is equal
+    if len(gt_bboxes) != len(output_bboxes_pred):
+        print(f"Warning: Number of ground truth bboxes ({len(gt_bboxes)}) does not match number of output bboxes ({len(output_bboxes_pred)})!")
+        return
+
+    if len(gt_bboxes) != len(output_bboxes_cas):
+        print(f"Warning: Number of ground truth bboxes ({len(gt_bboxes)}) does not match number of cas output bboxes ({len(output_bboxes_cas)})!")
+        return
+
+    # Get all image files and sort them numerically
+    image_files = glob.glob(os.path.join(images_folder, "*.jpg"))
+    image_files.sort(key=lambda x: int(os.path.basename(x).split('.')[0]))
+
+    # Ensure the number of images matches the number of bboxes
+    if len(image_files) != len(gt_bboxes):
+        print(f"Warning: Number of images ({len(image_files)}) does not match number of bboxes ({len(gt_bboxes)})!")
+        return
+
+    # Define colors (BGR format)
+    teal_color = (180, 180, 0)  # Teal (ground truth)
+    red_color = (0, 0, 255)  # Red (output)
+    orange_color = (0, 171, 247)  # Red (cas output)
+
+    # Process each image
+    for i, (image_file, gt_info, output_info, cas_info) in enumerate(zip(image_files, gt_bboxes, output_bboxes_pred, output_bboxes_cas)):
+        # Read image
+        img = cv2.imread(image_file)
+        if img is None:
+            print(f"Unable to read image: {image_file}")
+            continue
+
+        # Parse ground truth bbox info
+        _, gt_x, gt_y, gt_w, gt_h = gt_info
+
+        # Parse output bbox info
+        op_x, op_y, op_w, op_h = output_info
+        cas_x, cas_y, cas_w, cas_h = cas_info
+
+        # Draw ground truth rectangle
+        cv2.rectangle(img, (gt_x, gt_y), (gt_x + gt_w, gt_y + gt_h), teal_color, 2)
+
+        # Draw output rectangle
+        cv2.rectangle(img, (op_x, op_y), (op_x + op_w, op_y + op_h), red_color, 2)
+
+        # Draw cas output rectangle
+        cv2.rectangle(img, (cas_x, cas_y), (cas_x + cas_w, cas_y + cas_h), orange_color, 2)
+
+        # Add "gt" label
+        cv2.putText(img, "gt", (gt_x, gt_y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, teal_color, 2)
+
+        # Add "pred" label
+        cv2.putText(img, "pred", (op_x, op_y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, red_color, 2)
+
+        # Add "cas" / "async" label
+        cv2.putText(img, "pro", (cas_x, cas_y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, orange_color, 2)
+
+        # Save result image
+        output_path = os.path.join(output_folder, os.path.basename(image_file))
+        cv2.imwrite(output_path, img)
+
+        print(f"Processed image {i + 1}/{len(image_files)}: {os.path.basename(image_file)}")
+
+    print("Visualization complete! Results saved in:", output_folder)
+
+
 def main():
     parser = argparse.ArgumentParser(description='Convert PKL file to TXT file and visualize.')
     parser.add_argument('--sequence_name', type=str, default="airplane5", help='Environment setting')
     parser.add_argument('--tracker_name', type=str, default="dimp", help='Environment setting')
     parser.add_argument('--parameter_name', type=str, default="dimp18", help='Environment setting')
-    parser.add_argument('--setting_id', type=int, default=14, help='Environment setting')
-    parser.add_argument('--images-folder', type=str, default="/root/autodl-tmp/ESOT500/500/airplane5/VoxelGridComplex", help='Path to the original image folder')
-    parser.add_argument('--save-dir', type=str, default="/root/autodl-tmp/ESOT500/test_jiechu", help='Directory to save visualization results')
+    parser.add_argument('--setting_id', type=int, default=102, help='Environment setting')
+    parser.add_argument('--images-folder', type=str, default="/PATH/TO/VoxelGridComplex", help='Path to the original image folder')
+    parser.add_argument('--save-dir', type=str, default="/PATH/TO/RESULTS", help='Directory to save visualization results')
     
     args = parser.parse_args()
     env_variables = env_settings()
@@ -174,8 +286,9 @@ def main():
     # Step 1: Convert PKL to TXT
     convert_pkl_to_txt(pkl_path, txt_path, gt_path)
     
-    # Step 2: Visualization
+    # Step 2: Visualization (Or you can directly use this with proper paths)
     visualize_bboxes(gt_path, txt_path, images_folder, save_dir)
+
 
 if __name__ == "__main__":
     main()

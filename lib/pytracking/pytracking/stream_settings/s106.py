@@ -70,6 +70,10 @@ def parameters():
         'stark_s_baseline': 16 * 1e3,
         # egt
         'egt_egt': 40 * 1e3,
+        # mamba_fetrack
+        'mamba_fetrack_mamba_fetrack_felt': 28.4 * 1e3,
+        # hdetrack
+        'hdetrack_hdetrack_eventvot': 6.4 * 1e3,
     }
     
     params.sim_runtime_init = {
@@ -124,6 +128,10 @@ def parameters():
         'stark_s_baseline': 25 * 1e3,
         # egt
         'egt_egt': 1 * 1e3,
+        # mamba_fetrack
+        'mamba_fetrack_mamba_fetrack_felt': 1 * 1e3,
+        # hdetrack
+        'hdetrack_hdetrack_eventvot': 1 * 1e3,
     }
 
     # disturbance around runtime

@@ -29,7 +29,6 @@ from lib.test.evaluation.tracker import Tracker
 
 def load_stream_setting(stream_setting):
     """Get stream_setting."""
-
     param_module = importlib.import_module('pytracking.stream_settings.{}'.format(stream_setting))
     params = param_module.parameters()
     return params
@@ -37,15 +36,18 @@ def load_stream_setting(stream_setting):
 def find_last_pred(gt_t, pred_raw):
     pred_timestamps = pred_raw['out_timestamps']
     pred_timestamps[0] = 0
-    gt_t = gt_t*1e6
+    gt_t = gt_t * 1e6
     # print(gt_t, pred_timestamps[-1])
     # assert abs(gt_t - pred_timestamps[-1]) < 100  # time unit:s
-    last_pred_idx = np.searchsorted(pred_timestamps, gt_t)-1
+
+    last_pred_idx = np.searchsorted(pred_timestamps, gt_t) - 1
     pred_results = pred_raw['results_raw']
     pred_last_result = pred_results[last_pred_idx]
     pred_last_time = pred_timestamps[last_pred_idx]
+
     assert pred_last_time <= gt_t
     # print(gt_t, pred_last_time)
+
     return pred_last_result
 
 def stream_eval(gt_anno_t:list, raw_result:dict):
@@ -55,6 +57,7 @@ def stream_eval(gt_anno_t:list, raw_result:dict):
         pred_label = find_last_pred(gt_t, raw_result)
         pred_bbox = pred_label
         pred_final.append(pred_bbox)
+
     return pred_final
 
 def eval_sequence_stream(sequence, tracker, stream_setting):
@@ -67,9 +70,9 @@ def eval_sequence_stream(sequence, tracker, stream_setting):
     # downsample annotation frequency
     # gt_anno_t = gt_anno_t[::25]
 
-    save_dir = os.path.join(tracker.results_dir_rt_final,str(stream_setting.id))
+    save_dir = os.path.join(tracker.results_dir_rt_final, str(stream_setting.id))
     if tracker.run_id != None:
-        save_dir = os.path.join(tracker.results_dir_rt_final,str(stream_setting.id))
+        save_dir = os.path.join(tracker.results_dir_rt_final, str(stream_setting.id))
         # save_dir = os.path.join(tracker.results_dir_rt_final,'18d') # temporal
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -81,7 +84,7 @@ def eval_sequence_stream(sequence, tracker, stream_setting):
     assert raw_result['stream_setting'] == stream_setting.id
     pred_final = stream_eval(gt_anno_t, raw_result)
 
-    np.savetxt('{}/{}.txt'.format(save_dir,sequence.name),pred_final,fmt='%d',delimiter='\t')
+    np.savetxt('{}/{}.txt'.format(save_dir, sequence.name), pred_final, fmt='%d', delimiter='\t')
 
     
 def run_streaming_eval(tracker_name, tracker_param, stream_setting, run_id=None, dataset_name='esot500s', sequence=None):
@@ -94,7 +97,7 @@ def run_streaming_eval(tracker_name, tracker_param, stream_setting, run_id=None,
     stream_setting = load_stream_setting(stream_setting)
     for seq in dataset:
         for tracker_info in trackers:
-                eval_sequence_stream(seq, tracker_info, stream_setting)
+            eval_sequence_stream(seq, tracker_info, stream_setting)
 
 def main():
     parser = argparse.ArgumentParser(description='Run streaming eval on tracking results.')

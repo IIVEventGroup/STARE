@@ -166,7 +166,7 @@ def plot_draw_save(y, x, scores, trackers, plot_draw_styles, result_plot_path, p
     plt.draw()
 
 
-def check_and_load_precomputed_results(trackers, dataset, report_name, force_evaluation=False, **kwargs):
+def check_and_load_precomputed_results(trackers, dataset, report_name, force_evaluation=True, **kwargs):
     # Load data
     settings = env_settings()
 
@@ -460,7 +460,7 @@ def generate_formatted_report(row_labels, scores, table_name=''):
 
 
 def print_results(trackers, dataset, report_name, merge_results=False,
-                  plot_types=('success'), results_saved_file=None,**kwargs):
+                  plot_types=('success'), results_saved_file=None, **kwargs):
     """ Print the results for the given trackers in a formatted table
     args:
         trackers - List of trackers to evaluate
