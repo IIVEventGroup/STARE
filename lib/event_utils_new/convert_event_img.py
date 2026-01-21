@@ -73,6 +73,7 @@ def convert_event_img_aedat(events, style, height=260, width=346):
         dvs_img.index_put_((y, x), value, accumulate=False)
 
         raise NotImplemented
+
     else:
         raise NotImplemented
 

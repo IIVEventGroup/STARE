@@ -207,7 +207,7 @@ def interpolate_to_derivative_img(pxs, pys, dxs, dys, d_img, w1, w2):
 
 
 
-def voxel_grids_fixed_n_torch(xs, ys, ts, ps, B, n, step=None, sensor_size=(180, 240),resize_factor=None, temporal_bilinear=True):
+def voxel_grids_fixed_n_torch(xs, ys, ts, ps, B, n, step=None, sensor_size=(180, 240), resize_factor=None, temporal_bilinear=True):
     """
     Given a set of events, return a list of voxel grids with a fixed number of events.
     Parameters
@@ -291,10 +291,11 @@ def events_to_voxel_timesync_torch(xs, ys, ts, ps, B, t0, t1, device=None, np_ts
         np_ts = ts.cpu().numpy()
     if device is None:
         device = xs.device
-    #TODO 优化二分查找 首要考虑避免全段传入
-    
+
+    # TODO: optimize binary search by avoiding passing the entire segment
+
     #assert(start_idx < end_idx)
-    
+
     return voxel
 
 def events_to_voxel_torch(xs, ys, ts, ps, B, device=None, sensor_size=(180, 240),resize_factor=None, temporal_bilinear=True):

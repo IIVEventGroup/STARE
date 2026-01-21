@@ -96,7 +96,7 @@ def preprocess_esot500(path_to_esot500, fps, window, style='VoxelGridComplex'):
 
 def main():
     parser = argparse.ArgumentParser(description='Preprocess the raw events into event frames')
-    parser.add_argument('--path_to_data', type=str, default="/path/to/ESOT500(-H)", help="Path to ESOT500(-H) dataset")
+    parser.add_argument('--path_to_data', type=str, default="/PATH/TO/ESOT500(-H)", help="Path to ESOT500(-H) dataset")
     parser.add_argument('--fps', type=int, default=500, help='Output frame rate.')
     parser.add_argument('--window', type=int, default=2, help='window size of each frame (ms).')
     parser.add_argument('--style', type=str, default='VoxelGridComplex', help='Event frame style.')
