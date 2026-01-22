@@ -40,6 +40,10 @@ def esot500_frame_all():
         'esot_500_50', 'esot_250_50', 'esot_20_50',
         'esot_500_100', 'esot_250_100', 'esot_20_100',
         'esot_500_150', 'esot_250_150', 'esot_20_150',
+        'esoth_500_2', 'esoth_250_2', 'esoth_20_2',
+        'esoth_500_8', 'esoth_250_8', 'esoth_20_8',
+        'esoth_500_20', 'esoth_250_20', 'esoth_20_20',
+        'esoth_500_50', 'esoth_250_50', 'esoth_20_50',
     )
 
     return trackers, dataset
