@@ -32,7 +32,6 @@ class EnvSettings:
         self.tn_packed_results_path = ''
         self.fe240_dir = ''
         self.visEvent_dir = ''
-        self.eventsot_dir = ''
 
         self.esot500_dir = os.path.join(os.environ.get('ESOT500_DIR', ''), 'ESOT500-L')
         self.esot500h_dir = os.path.join(os.environ.get('ESOT500_DIR', ''), 'ESOT500-H')
