@@ -22,7 +22,8 @@ class ESOT500DatasetStream(BaseDataset):
         self.base_path = self.env_settings.esot500_dir
         if fps!='500':
             self.base_path = self.base_path[:-3]+fps
-            print('Using fps:{} dataset for testing'.format(fps))
+            print('Using fps: {} ESOT500-L dataset for testing'.format(fps))
+
         self.sequence_list = self._get_sequence_list(split)
         self.split = split
         self.fps = fps
@@ -79,7 +80,8 @@ class ESOT500HDatasetStream(BaseDataset):
         self.base_path = self.env_settings.esot500h_dir
         if fps != '500':
             self.base_path = self.base_path[:-3] + fps
-            print('Using fps:{} dataset for testing'.format(fps))
+            print('Using fps: {} ESOT500-H dataset for testing'.format(fps))
+
         self.sequence_list = self._get_sequence_list(split)
         self.split = split
         self.fps = fps

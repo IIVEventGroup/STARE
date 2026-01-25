@@ -20,7 +20,7 @@ class ESOT500Dataset(BaseDataset):
         # Split can be test, val, or ltrval (a validation split consisting of videos from the official train set)
         self.base_path = self.env_settings.esot500_dir
         self.base_path = os.path.join(self.base_path,'{}_w{}ms'.format(fps,window))
-        print('Using subset:{} fps , {} ms window for testing'.format(fps,window))
+        print('Using ESOT500-L subset: {} fps , {} ms window for testing'.format(fps,window))
         self.sequence_list = self._get_sequence_list(split)
         self.split = split
         self.fps = fps
@@ -68,7 +68,7 @@ class ESOT500HDataset(BaseDataset):
         # Split can be test, val, or ltrval (a validation split consisting of videos from the official train set)
         self.base_path = self.env_settings.esot500h_dir
         self.base_path = os.path.join(self.base_path,'{}_w{}ms'.format(fps,window))
-        print('Using subset:{} fps , {} ms window for testing'.format(fps,window))
+        print('Using ESOT500-H subset: {} fps , {} ms window for testing'.format(fps,window))
         self.sequence_list = self._get_sequence_list(split)
         self.split = split
         self.fps = fps
