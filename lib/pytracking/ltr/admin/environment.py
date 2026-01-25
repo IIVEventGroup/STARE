@@ -7,7 +7,8 @@ def create_default_local_file():
     path = os.path.join(os.path.dirname(__file__), 'local.py')
 
     empty_str = '\'\''
-    esot500_dir = f"\'{os.environ.get('ESOT500_DIR', '')}\'"
+    esot500_dir = f"\'{os.path.join(os.environ.get('ESOT500_DIR', ''), 'ESOT500-L')}\'"
+    esot500h_dir = f"\'{os.path.join(os.environ.get('ESOT500_DIR', ''), 'ESOT500-H')}\'"
     
     default_settings = OrderedDict({
         'workspace_dir': empty_str,
@@ -31,7 +32,7 @@ def create_default_local_file():
         'visEvent_dir': empty_str,
         'eventcarla_dir': empty_str,
         'esot500_dir': esot500_dir,
-        'esot2_dir': empty_str,
+        'esot500h_dir': esot500h_dir,
 
         'lasot_candidate_matching_dataset_path': empty_str})
 
