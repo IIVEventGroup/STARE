@@ -47,7 +47,7 @@ class FE240Dataset(BaseDataset):
     def _get_sequence_list(self, split):
         sequence_train = []
         sequence_test = []
-        with open ('/media/group2/data/zhangzikai/FE108/fe240-list.txt','r') as f:
+        with open (f'{self.env_settings.fe240_dir}/fe240-list.txt','r') as f:
             f.readline()
             for line in f:
                 if not 'testing set' in line:
@@ -55,13 +55,18 @@ class FE240Dataset(BaseDataset):
                 else:
                     # f.readline()
                     break
+
             for line in f:
                 sequence_test.append(line.strip())
+
         sequence_train.pop()
+
         if split == 'test' or split == 'val':
             return sequence_test
         elif split == 'train':
             return sequence_train
+
+
 if __name__ == '__main__':
     train_dataset = FE240Dataset('test')
     seqlist = train_dataset.get_sequence_list()

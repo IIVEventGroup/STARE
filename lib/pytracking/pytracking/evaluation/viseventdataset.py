@@ -81,6 +81,8 @@ class VisEventDataset(BaseDataset):
             print('Missing sequence')
             print(version_list_cp)
         return sequence_list, seq2start
+
+
 if __name__ == '__main__':
     train_dataset = VisEventDataset('test','stnet')
     seqlist = train_dataset.get_sequence_list()
