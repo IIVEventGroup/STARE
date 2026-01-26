@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data.distributed import DistributedSampler
 # datasets related
-from lib.train.dataset import Lasot, Got10k, MSCOCOSeq, ImagenetVID, TrackingNet,FE240, VisEvent, EventCARLA, ESOT500, ESOT2
+from lib.train.dataset import Lasot, Got10k, MSCOCOSeq, ImagenetVID, TrackingNet,FE240, VisEvent, EventCARLA, ESOT500, ESOT500H
 from lib.train.dataset import Lasot_lmdb, Got10k_lmdb, MSCOCOSeq_lmdb, ImagenetVID_lmdb, TrackingNet_lmdb
 from lib.train.data import sampler, opencv_loader, processing, LTRLoader
 import lib.train.data.transforms as tfm
@@ -30,7 +30,7 @@ def names2datasets(name_list: list, settings, image_loader):
     for name in name_list:
         # assert name in ["LASOT", "GOT10K_vottrain", "GOT10K_votval", "GOT10K_train_full", "GOT10K_official_val",
         #                 "COCO17", "VID", "TRACKINGNET","FE240","FE240_240","FE240_val","VisEvent","VisEvent_val","VieEvent_val_stnet",
-        #                 "EventCARLA","ESOT500","ESOT250","ESOT125","ESOT050","ESOT020","ESOT500_val","ESOT2"]
+        #                 "EventCARLA","ESOT500","ESOT250","ESOT125","ESOT050","ESOT020","ESOT500_val","ESOT500H","ESOT500H_val"]
         if name =="FE240":
             print("Building FE240 dataset")
             datasets.append(FE240(settings.env.fe240_dir, split='train', image_loader=image_loader))
@@ -52,35 +52,43 @@ def names2datasets(name_list: list, settings, image_loader):
         if name == "EventCARLA":
             print("Building EventCARLA dataset")
             datasets.append(EventCARLA(settings.env.eventcarla_dir, split='train', image_loader=image_loader))
+        
         if name == "ESOT500":
-            print("Building EventSOT500 dataset")
+            print("Building ESOT500 dataset")
             datasets.append(ESOT500(settings.env.esot500_dir+'/500', split='train', image_loader=image_loader))
+
         if name == "ESOT250":
-            print("Building EventSOT250 dataset")
+            print("Building ESOT250 dataset")
             datasets.append(ESOT500(settings.env.esot500_dir+'/250', split='train', image_loader=image_loader))
+
         if name == "ESOT125":
-            print("Building EventSOT125 dataset")
+            print("Building ESOT125 dataset")
             datasets.append(ESOT500(settings.env.esot500_dir+'/125', split='train', image_loader=image_loader))
+
         if name == "ESOT050":
-            print("Building EventSOT050 dataset")
-            datasets.append(ESOT500(settings.env.esot500_dir+'/050', split='train', image_loader=image_loader))
+            print("Building ESOT050 dataset")
+            datasets.append(ESOT500(settings.env.esot500_dir+'/50', split='train', image_loader=image_loader))
+
         if name == "ESOT020":
-            print("Building EventSOT020 dataset")
-            datasets.append(ESOT500(settings.env.esot500_dir+'/20_w50ms', split='train', image_loader=image_loader))
+            print("Building ESOT020 dataset")
+            datasets.append(ESOT500(settings.env.esot500_dir+'/20', split='train', image_loader=image_loader))
 
         if name == "ESOT500_val":
-            print("Building EventSOT500 validation dataset")
-            datasets.append(ESOT500(settings.env.esot500_dir, split='test', image_loader=image_loader))
-        if name == "ESOT2":
-            print("Building EventSOT2 dataset, default")
-            datasets.append(ESOT2(settings.env.esot2_dir, split='train', image_loader=image_loader))
-        # if name == "ESOT2_2_2":
-        #     print("Building EventSOT2 dataset, inter 2 window 2")
-        #     datasets.append(ESOT2(settings.env.esot2_dir, split='train', image_loader=image_loader, inter=2, window=2))
-        if name.startswith('ESOT2_'):
-            _, inter, window = name.split('_')
-            print(f"Building EventSOT2 dataset, inter {inter} window {window}")
-            datasets.append(ESOT2(settings.env.esot2_dir, split='train', image_loader=image_loader, inter=inter, window=window))
+            print("Building ESOT500 validation dataset")
+            datasets.append(ESOT500(settings.env.esot500_dir+'/500', split='test', image_loader=image_loader))
+
+        if name == "ESOT500H":
+            print("Building ESOT500H dataset, default")
+            datasets.append(ESOT500H(settings.env.esot500h_dir+'/500', split='train', image_loader=image_loader))
+
+        if name == "ESOT500H_val":
+            print("Building ESOT500H validation dataset")
+            datasets.append(ESOT500H(settings.env.esot500h_dir+'/500', split='test', image_loader=image_loader))
+
+        # if name.startswith('ESOT500H_'):
+        #     _, inter, window = name.split('_')
+        #     print(f"Building ESOT500H dataset, inter {inter} window {window}")
+        #     datasets.append(ESOT500H(settings.env.esot500h_dir, split='train', image_loader=image_loader, inter=inter, window=window))
 
         if name == "LASOT":
             if settings.use_lmdb:

@@ -47,6 +47,7 @@ class VisEvent(BaseVideoDataset):
                 raise ValueError('Unknown split name.')
             # seq_ids = pandas.read_csv(file_path, header=None, squeeze=True).values.tolist()
             seq_ids = list(range(0, len(self.sequence_list)))
+
         elif seq_ids is None:
             raise ValueError('split and seq_ids are both None')
             self.sequence_list = self._get_sequence_list(split = 'total')

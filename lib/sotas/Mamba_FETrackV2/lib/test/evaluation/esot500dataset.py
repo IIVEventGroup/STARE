@@ -5,7 +5,7 @@ import os
 
 
 class ESOT500HDataset(BaseDataset):
-    """ EventCarla dataset. modified from GOT-10k DATASETS_RATIO
+    """ ESOT500-H dataset. modified from GOT-10k DATASETS_RATIO
 
     Publication:
         GOT-10k: A Large High-Diversity Benchmark for Generic Object Tracking in the Wild
@@ -55,7 +55,7 @@ class ESOT500HDataset(BaseDataset):
 
 
 class ESOT500Dataset(BaseDataset):
-    """ EventCarla dataset. modified from GOT-10k DATASETS_RATIO
+    """ ESOT500-L dataset. modified from GOT-10k DATASETS_RATIO
 
     Publication:
         GOT-10k: A Large High-Diversity Benchmark for Generic Object Tracking in the Wild

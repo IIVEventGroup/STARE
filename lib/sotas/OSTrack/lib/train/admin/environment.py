@@ -80,9 +80,9 @@ def create_default_local_file_ITP_train(workspace_dir, data_dir):
         'davis_dir': empty_str,
         'fe240_dir':os.path.join(data_dir,'FE240'),
         'visEvent_dir':os.path.join(data_dir,'VisEvent'),
-        'eventcarla_dir':os.path.join(data_dir,'EventSOT/EventCARLA/VoxelGrid'),
-        'esot500_dir':os.path.join(data_dir,'EventSOT/EventSOT500/EventSOT500'),
-        'esot2_dir':os.path.join(data_dir,'EventSOT/EventSOT2'),
+        'eventcarla_dir':os.path.join(data_dir,'EventCARLA/VoxelGrid'),
+        'esot500_dir':os.path.join(data_dir,'ESOT500/ESOT500-L'),
+        'esot500h_dir':os.path.join(data_dir,'ESOT500/ESOT500-H'),
         'youtubevos_dir': empty_str})
 
     comment = {'workspace_dir': 'Base directory for saving network checkpoints.',

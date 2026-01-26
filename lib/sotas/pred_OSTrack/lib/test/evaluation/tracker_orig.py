@@ -86,7 +86,7 @@ class Tracker:
 
         tracker = self.create_tracker(params)
 
-        if seq.dataset in ['esot500s','esot2s']:
+        if seq.dataset in ['esot500s','esot500hs']:
             output = self._track_evstream(tracker, seq, init_info)
         else:
             output = self._track_sequence(tracker, seq, init_info)

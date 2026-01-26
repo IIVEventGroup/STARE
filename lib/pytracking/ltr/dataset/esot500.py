@@ -12,7 +12,7 @@ from ltr.admin.environment import env_settings
 
 
 class ESOT500(BaseVideoDataset):
-    """ EventSOT500 dataset.
+    """ ESOT500-L dataset.
 
     """
 
@@ -51,7 +51,7 @@ class ESOT500(BaseVideoDataset):
             self.sequence_list = random.sample(self.sequence_list, int(len(self.sequence_list)*data_fraction))
 
     def get_name(self):
-        return 'EventSOT500'
+        return 'ESOT500-L'
 
     def has_class_info(self):
         return False
@@ -60,14 +60,13 @@ class ESOT500(BaseVideoDataset):
         return False
 
     def get_sequences_in_class(self, class_name):
-        raise('EventSOT500 does not support get sequences in class')
+        raise('ESOT500-L does not support get sequences in class')
 
     def _get_sequence_list(self, split):
         seq_list = []
-
-        with open ('/media/data/yangchu/EventSOT/EventSOT500/{}.txt'.format(split),'r') as f:
+        with open (f'{env_settings().esot500_dir}/{split}.txt', 'r') as f:
             for line in f:
-                    seq_list.append(line.strip())
+                seq_list.append(line.strip())
         return seq_list
 
     def _read_bb_anno(self, seq_path):
@@ -120,6 +119,6 @@ class ESOT500(BaseVideoDataset):
         return self.sequence_list[seq_id]
 
 if __name__ == '__main__':
-    dataset = ESOT500(root=env_settings().esot500_dir,split='test')
+    dataset = ESOT500(root=env_settings().esot500_dir, split='test')
 
     print(dataset)

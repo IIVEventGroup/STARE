@@ -17,7 +17,6 @@ pytracking/evaluation/local.py
 pytracking/run_local.py
 pytracking/output
 pytracking/output/*
-pytracking/analysis/VisEventSOT2
 log
 debug
 data

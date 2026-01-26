@@ -77,7 +77,7 @@ class FE240(BaseVideoDataset):
     def _get_sequence_list(self, split):
         sequence_train = []
         sequence_test = []
-        with open ('/media/group2/data/zhangzikai/FE108/fe240-list.txt','r') as f:
+        with open (f'{self.env_settings.fe240_dir}/fe240-list.txt','r') as f:
             f.readline()
             for line in f:
                 if not 'testing set' in line:

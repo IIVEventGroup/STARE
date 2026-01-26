@@ -13,5 +13,5 @@ from .fe240 import FE240
 from .visevent import VisEvent
 from .eventcarla import EventCARLA
 from .esot500 import ESOT500
-from .esot2 import ESOT2
+from .esot500 import ESOT500H
 

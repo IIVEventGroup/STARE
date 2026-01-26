@@ -49,6 +49,7 @@ class FE240(BaseVideoDataset):
                 raise ValueError('Unknown split name.')
             # seq_ids = pandas.read_csv(file_path, header=None, squeeze=True).values.tolist()
             seq_ids = list(range(0, len(self.sequence_list)))
+
         elif seq_ids is None:
             self.sequence_list = self._get_sequence_list(split = 'total')
             seq_ids = list(range(0, len(self.sequence_list)))
@@ -59,7 +60,6 @@ class FE240(BaseVideoDataset):
         # for seq in seq_ids:
         #     if seq not in self.sequence_list:
         #         raise(seq + ' is not in sequence list')
-
 
         if data_fraction is not None:
             self.sequence_list = random.sample(self.sequence_list, int(len(self.sequence_list)*data_fraction))
@@ -79,7 +79,7 @@ class FE240(BaseVideoDataset):
     def _get_sequence_list(self, split):
         sequence_train = []
         sequence_test = []
-        with open ('/media/group2/data/zhangzikai/FE108/fe240-list.txt','r') as f:
+        with open (f'{self.env_settings.fe240_dir}/fe240-list.txt','r') as f:
             f.readline()
             for line in f:
                 if not 'testing set' in line:

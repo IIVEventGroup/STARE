@@ -26,7 +26,6 @@ def create_default_local_file():
         'hkuis_dir': empty_str,
         'msra10k_dir': empty_str,
         'davis_dir': empty_str,
-
         'fe240_dir': empty_str,
         'visEvent_dir': empty_str,
         'eventcarla_dir': empty_str,
