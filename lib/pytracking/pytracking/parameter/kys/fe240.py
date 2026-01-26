@@ -67,7 +67,7 @@ def parameters():
     params.remove_offset_in_fused_score = True
     params.score_downsample_factor = 1
 
-    params.net = NetWithBackbone(net_path='/home/test4/code/EventBenchmark/lib/pytracking/ltr/checkpoints/checkpoints/ltr/kys/kys_fe240/KYSNet_ep0040.pth.tar',
+    params.net = NetWithBackbone(net_path='kys/fe240/KYSNet_ep0040.pth.tar',
                                  use_gpu=params.use_gpu)
 
     params.vot_anno_conversion_type = 'preserve_area'

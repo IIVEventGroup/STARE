@@ -14,11 +14,12 @@ from ltr.admin.environment import env_settings
 
 
 class VisEvent(BaseVideoDataset):
-    """ VisEvent dataset.
-
+    """
+    VisEvent dataset.
     """
 
-    def __init__(self, root=None, image_loader=jpeg4py_loader, split=None, version=None, seq_ids=None, data_fraction=None):
+    def __init__(self, root=None, image_loader=jpeg4py_loader, split=None, version=None, seq_ids=None,
+                 data_fraction=None):
         """
         args:
             root - path to the VisEvent data.
@@ -33,7 +34,7 @@ class VisEvent(BaseVideoDataset):
         super().__init__('VisEvent', root, image_loader)
         self.ltr_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
         # all folders inside the root
-        self.seq2start=[]
+        self.seq2start = []
         self.split = split
 
         # seq_id is the index of the folder inside the got10k root path
@@ -50,7 +51,7 @@ class VisEvent(BaseVideoDataset):
 
         elif seq_ids is None:
             raise ValueError('split and seq_ids are both None')
-            self.sequence_list = self._get_sequence_list(split = 'total')
+            self.sequence_list = self._get_sequence_list(split='total')
             seq_ids = list(range(0, len(self.sequence_list)))
             # seq_ids = list(range(0, len(self.sequence_list)))
 
@@ -59,7 +60,7 @@ class VisEvent(BaseVideoDataset):
         #         raise(seq + ' is not in sequence list')
 
         if data_fraction is not None:
-            self.sequence_list = random.sample(self.sequence_list, int(len(self.sequence_list)*data_fraction))
+            self.sequence_list = random.sample(self.sequence_list, int(len(self.sequence_list) * data_fraction))
 
     def get_name(self):
         return 'visEvent'
@@ -71,47 +72,47 @@ class VisEvent(BaseVideoDataset):
         return False
 
     def get_sequences_in_class(self, class_name):
-        raise('VisEvent does not support get sequences in class')
+        raise ('VisEvent does not support get sequences in class')
 
     def _get_sequence_list_start(self, split, version=None):
         sequence_list = []
         seq2start = []
         version_list = []
         list_pair_file = '{}/{}_pair.json'.format(self.root, split)
-        with open(list_pair_file,'r') as j:
+        with open(list_pair_file, 'r') as j:
             seq_start_dict = json.loads(j.read())
         if version in ['stnet']:
             version_list_file = '{}/{}_{}.txt'.format(self.root, split, version)
-            with open(version_list_file,'r') as v:
+            with open(version_list_file, 'r') as v:
                 for line in v.readlines():
                     version_list.append(line.strip())
-        for seq,start_idx in seq_start_dict.items():
-            if len(version_list)==0: # no version
+        for seq, start_idx in seq_start_dict.items():
+            if len(version_list) == 0:  # no version
                 sequence_list.append(seq)
                 seq2start.append(start_idx)
-            else: # version selected
+            else:  # version selected
                 if seq in version_list:
                     sequence_list.append(seq)
                     seq2start.append(start_idx)
         return sequence_list, seq2start
-        
-    
+
     def _get_sequence_list(self, split):
         sequence_list = []
         list_file = '{}/{}.txt'.format(self.root, split)
-        with open (list_file,'r') as f:
+        with open(list_file, 'r') as f:
             for line in f:
-                sequence_list.append(split+'/'+line.strip()) 
+                sequence_list.append(split + '/' + line.strip())
 
         return sequence_list
 
     def _read_bb_anno(self, seq_path):
         bb_anno_file = os.path.join(seq_path, "groundtruth.txt")
-        gt = pandas.read_csv(bb_anno_file, delimiter=',', header=None, dtype=np.float32, na_filter=False, low_memory=False).values
+        gt = pandas.read_csv(bb_anno_file, delimiter=',', header=None, dtype=np.float32, na_filter=False,
+                             low_memory=False).values
         return torch.tensor(gt)
 
     def _get_sequence_path(self, seq_id):
-        return os.path.join(self.root,self.split, self.sequence_list[seq_id])
+        return os.path.join(self.root, self.split, self.sequence_list[seq_id])
 
     def get_sequence_info(self, seq_id):
         seq_path = self._get_sequence_path(seq_id)
@@ -122,9 +123,9 @@ class VisEvent(BaseVideoDataset):
 
         return {'bbox': bbox, 'valid': valid, 'visible': visible}
 
-    def _get_frame_path(self, seq_path, frame_id , style='VoxelGridComplex'):
+    def _get_frame_path(self, seq_path, frame_id, style='VoxelGridComplex'):
         if style == 'VoxelGridComplex':
-            return os.path.join(seq_path, style, '{:05}.jpg'.format(frame_id))    
+            return os.path.join(seq_path, style, '{:05}.jpg'.format(frame_id))
 
     def _get_frame(self, seq_path, frame_id):
         return self.image_loader(self._get_frame_path(seq_path, frame_id))
@@ -152,11 +153,12 @@ class VisEvent(BaseVideoDataset):
 
         object_meta = None
 
-        return frame_list, anno_frames, object_meta #, vis_list
-    
+        return frame_list, anno_frames, object_meta  # , vis_list
+
     def get_sequence_name(self, seq_id):
         return self.sequence_list[seq_id]
 
+
 if __name__ == '__main__':
-    dataset = VisEvent(root='data/VisEvent',split='test',version='stnet')
+    dataset = VisEvent(root='data/VisEvent', split='test', version='stnet')
     print(dataset)

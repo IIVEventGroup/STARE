@@ -65,7 +65,7 @@ def parameters():
     # KeepTrack parameters
     params.use_certainty_for_weight_computation = True
     params.certainty_for_weight_computation_ths = 0.5
-    params.target_candidate_matching_net = NetWrapper(net_path='/home/test4/code/EventBenchmark/lib/pytracking/ltr/checkpoints/checkpoints/ltr/keep_track/JieChu_fe240/keep_track_ep0015.pth.tar', use_gpu=params.use_gpu)
+    params.target_candidate_matching_net = NetWrapper(net_path='keep_track/fe240/keep_track_ep0015.pth.tar', use_gpu=params.use_gpu)
 
     params.vot_anno_conversion_type = 'preserve_area'
     params.net = NetWithBackbone(net_path='super_dimp_simple.pth.tar', use_gpu=params.use_gpu)

@@ -294,7 +294,7 @@ class Tracker:
 
         event_rep = convert_event_img_aedat(template_events, stream_setting.representation, height, width)
 
-        '''JieChu:
+        '''
         t_convert record the couvert time of the template frame.
         '''
         t_convert = perf_counter()*1e6 - t0

@@ -50,7 +50,7 @@ def parameters():
     params.conf_ths = 0.9
     params.search_area_rescaling_at_occlusion = True
 
-    params.net = NetWithBackbone(net_path='/home/test4/code/EventBenchmark/lib/pytracking/ltr/checkpoints/checkpoints/ltr/tomp/JieChu_tomp101_fe240/ToMPnet_ep0300.pth.tar', use_gpu=params.use_gpu)
+    params.net = NetWithBackbone(net_path='tomp/tomp101/fe240/ToMPnet_ep0300.pth.tar', use_gpu=params.use_gpu)
 
     params.vot_anno_conversion_type = 'preserve_area'
 
