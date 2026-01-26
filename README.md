@@ -184,7 +184,7 @@ The software versions of the base experimental environment used for testing are:
             :   :   # Similar as ESOT500-L
     ```
 
-- The aedat4 directory contains the raw event data (event stream and corresponding RGB frames), the [DV](https://inivation.gitlab.io/dv/dv-docs/docs/getting-started.html) and [dv-python](https://gitlab.com/inivation/dv/dv-python) is recommended for visualization and processing in python respectively.
+- The aedat4 directory contains the raw event data, including event stream and corresponding RGB frames (only for ESOT500-L), the [DV](https://inivation.gitlab.io/dv/dv-docs/docs/getting-started.html) and [dv-python](https://gitlab.com/inivation/dv/dv-python) is recommended for visualization and processing in python respectively.
 
 - You can find the metadata file at `data/esot500_metadata.json`, or download it from our dataset page in [[Hugging face]](https://huggingface.co/datasets/sii-geai-lab/ESOT500).
 
@@ -195,15 +195,19 @@ The software versions of the base experimental environment used for testing are:
 For frame-based latency-free evaluation, you need to perform a pre-slice preprocessing, as described in the original paper. Just run the following python command:
 
 ```
-python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500] --fps [FPS] --window [MS]
+python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500-(L/H)] --fps [FPS] --window [MS]
 ```
 the arguments `FPS` and `MS` should follow the chart bellow, as shown in the Table. 2 of the paper:
 
 <center>
 
-#### Pre-Slicing Settings (fps/ms)
+#### ESOT500-L Pre-Slicing Settings (fps/ms)
 | 500/2 | 250/2 | 20/2 | 500/50 | 250/50 | 20/50 | 500/100 | 250/100 | 20/100 | 500/150 | 250/150 | 20/150 |
 |----|----|---|---|---|--|---|---|---|----|---|--|
+
+#### ESOT500-H Pre-Slicing Settings (fps/ms)
+| 500/2 | 250/2 | 20/2 | 500/8 | 250/8 | 20/8 | 500/20 | 250/20 | 20/20 | 500/50 | 250/50 | 20/50 |
+|----|----|---|-------|-------|------|--------|--------|-------|----|---|--|
 
 </center>
 
@@ -211,8 +215,8 @@ the arguments `FPS` and `MS` should follow the chart bellow, as shown in the Tab
 
 To prepare data for STARE experiments, you need to do the following:
 ```
-python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500] --fps 500 --window 2
-ln -s [/PATH/TO/ESOT500]/500_w2ms [/PATH/TO/ESOT500]/500
+python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500-(L/H)] --fps 500 --window 2
+ln -s [/PATH/TO/ESOT500-(L/H)]/500_w2ms [/PATH/TO/ESOT500-(L/H)]/500
 ```
 
 <br>
@@ -221,7 +225,7 @@ ln -s [/PATH/TO/ESOT500]/500_w2ms [/PATH/TO/ESOT500]/500
 
 As mentioned at the beginning of the Usage section, the code is based on the [**PyTracking**](https://github.com/visionml/pytracking) and other similar frameworks.
 
-Below are the instructions to configure and run the tracker under PyTracking.
+Belows are the instructions to configure and run the tracker under PyTracking.
 
 **1.** Create a virtual environment and install required libraries.
 
