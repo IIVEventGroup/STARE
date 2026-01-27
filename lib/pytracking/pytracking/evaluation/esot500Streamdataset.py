@@ -31,7 +31,7 @@ class ESOT500DatasetStream(BaseDataset):
 
         # FPS only for gt evaluation
         self.annot_fps = annot_fps
-        print('Using fps: {} ESOT500-H dataset for testing'.format(annot_fps))
+        print('Using fps: {} ESOT500-L dataset for testing'.format(annot_fps))
 
     def get_sequence_list(self):
         return SequenceList([self._construct_sequence(s) for s in self.sequence_list])
