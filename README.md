@@ -260,17 +260,17 @@ python -c "from pytracking.evaluation.environment import create_default_local_fi
 python -c "from ltr.admin.environment import create_default_local_file; create_default_local_file()"
 ```
 
-**5.** Modify the dataset path `settings.esot500_dir` in generated environment setting files.
+**5.** Modify the ESOT500-L dataset path `settings.esot500_dir` in generated environment setting files.
 - for training: `ltr/admin/local.py`
 - for testing: `pytracking/evaluation/local.py`
-- please directly place the pre-trained tracker checkpoints files in: `settings.network_path`
+- please directly place the pre-trained pytracking tracker checkpoints files (all directories in `STARE_trackers_more/pytracking`) to: `settings.network_path`
 
 **6.** Run frame-based evaluation demo. 
 
 (Experiment settings are in folder `pytracking/experiments` and `pytracking/stream_settings`)
 ```
 # pre-slice the '20_w50ms'(fps=20 & windows=50ms) subset
-python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500] --fps 20 --window 50
+python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500-L] --fps 20 --window 50
 
 # run three trackers(atom, dimp18 and kys) for 'fps=20 & windows=50ms' settings
 python pytracking/run_experiment.py exp_frame fast_test_offline
@@ -296,17 +296,17 @@ def fast_test_offline():
 (Experiment settings are in folder `pytracking/experiments` and `pytracking/stream_settings`.)
 ```
 # prepare data for STARE experiments (If you have done this before, you can skip this step.)
-python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500] --fps 500 --window 2
-ln -s [/PATH/TO/ESOT500]/500_w2ms [/PATH/TO/ESOT500]/500
+python [/PATH/TO/STARE]/lib/event_utils_new/esot500_preprocess.py --path_to_data [/PATH/TO/ESOT500-L] --fps 500 --window 2
+ln -s [/PATH/TO/ESOT500-L]/500_w2ms [/PATH/TO/ESOT500-L]/500
 
-# run three trackers(atom, dimp18 and kys) for 'real streaming & windows=20ms' settings
+# run three trackers (atom, dimp18 and kys) for 'real streaming & windows=20ms' settings
 python pytracking/run_experiment_streaming.py exp_stare fast_test_stare
 
 # align the prediction with GT timestamp
 python eval/streaming_eval_v3.py exp_stare fast_test_stare
 ```
 The instructions given are for real-time testing on your own hardware. 
-If you want to reproduce the results in our paper, please refer to `pytracking/stream_settings/s100`.
+If you want to reproduce the results in our paper, please refer to `pytracking/stream_settings/s10(1-6)`.
 
 **Note:** 
 
@@ -331,7 +331,7 @@ def fast_test_stare():
 
 You can also refer to it to write the analysis scripts of your own style.
 
-**Note:** For tracker enhancement, please see the follow-up section.
+**9.** For tracker enhancement, please see the follow-up section.
 
 <br>
 
@@ -365,16 +365,16 @@ python -c "from lib.test.evaluation.environment import create_default_local_file
 python -c "from lib.train.admin.environment import create_default_local_file; create_default_local_file()"
 ```
 
-**5.** Modify the dataset path `settings.esot500_dir` in generated environment setting files.
+**5.** Modify the ESOT500-L dataset path `settings.esot500_dir` in generated environment setting files.
 - for training: `lib/train/admin/local.py`
 - for testing: `lib/test/evaluation/local.py`
-- please place the pre-trained tracker checkpoints in: `settings.network_path`
+- please place the pre-trained tracker checkpoint files (`STARE_trackers_more/sotas/{tracker_name}` directory) in: `settings.network_path`
 
 **6.** Run frame-based evaluation demo. 
 ```
 python tracking/test.py ostrack esot500mix --dataset_name esot_20_50
 ```
-Similar as `Trackers under PyTracking`, the results are by default in the folders `lib/test/tracking_results`.
+Similar as trackers under PyTracking, the results are by default in the folders `lib/test/tracking_results`.
 
 **Note:** 
 - This doesn't work for **pred_OSTrack**.
@@ -382,22 +382,22 @@ Similar as `Trackers under PyTracking`, the results are by default in the folder
 
 **7.** Run stream-based latency-aware evaluation demo **without predictive module**.
 ```
-python tracking/test_streaming.py ostrack esot500_baseline s100 --dataset_name esot500s [--runid 66 --use_aas]
+python tracking/test_streaming.py ostrack esot500_baseline s100 --dataset_name esot500s [--runid 66 --use_cas 1]
 python tracking/streaming_eval_v4.py ostrack esot500_baseline s100 --dataset_name esot500s [--runid 66]
 ```
-Similar as `Trackers under PyTracking`, the results are by default in the folders `lib/test/tracking_results_rt_final`.
+Similar as trackers under PyTracking, the results are by default in the folders `lib/test/tracking_results_rt_final`.
 
 **Note:**
-- `--use_aas` option is currently only available to **OSTrack** and **pred_OSTrack**.
+- `--use_cas` option is currently available to **OSTrack** and **async_OSTrack**.
 - you can change the relevant parameters in `streaming_eval_v4.py` to make it fit your own style
 
 **8.** Run stream-based latency-aware evaluation demo **with predictive module**.
 ```
 # under pred_OSTrack dir
-python tracking/test_streaming.py ostrack pred_esot500_4step s100 --dataset_name esot500s --pred_next 1 [--runid 66 --use_aas]
-python tracking/streaming_predspeed.py ostrack pred_esot500_4step s100 [--runid 66]
+python tracking/test_streaming.py ostrack pred_esot500_4step s100 --dataset_name esot500s --pred_next 1
+python tracking/streaming_predspeed.py ostrack pred_esot500_4step s100 --dataset_name esot500s --dynamic_order 1
 ```
-Similar as `Trackers under PyTracking`, the results are by default in the folders `lib/test/tracking_results_rt_final`.
+Similar as trackers under PyTracking, the results are by default in the folders `lib/test/tracking_results_rt_final`.
 
 **Note:**
 - `--pred_next 1` option is currently only available to **pred_OSTrack**.
@@ -406,6 +406,8 @@ Similar as `Trackers under PyTracking`, the results are by default in the folder
 **9.** To evaluate the results, use `lib/test/analysis/analysis_results_demo.ipynb`. 
 
 You can also refer to it to write the analysis scripts of your own style.
+
+**10.** For other trackers under similar frameworks, please refer to `lib/stare.sh` for the full running commands.
 
 <br><br>
 
@@ -416,7 +418,7 @@ You can also refer to it to write the analysis scripts of your own style.
 **1.** Preparation of Tracker Checkpoints and Sample Data
 
 -  Download the [`dimp18`](https://drive.google.com/file/d/11MFQzqnZbbZ92e9zjvb8TBxLSU7WVhZk/view?usp=sharing) tracker checkpoints and place them in the `settings.network_path` directory (as detailed in [Usage/trackers-under-pytracking](#trackers-under-pytracking)).
--  Download the demo sequence [`airplane5`](https://drive.google.com/drive/folders/13QQOWbevKulELizRH2PouQr_nibPxy_n?usp=sharing) (which belongs to the test split of the ESOT500 dataset) and place all the downloaded directories/files in the `../data/ESOT500` directory (as detailed in [Usage/trackers-under-pytracking](#trackers-under-pytracking)) .
+-  Download the demo sequence [`airplane5`](https://drive.google.com/drive/folders/13QQOWbevKulELizRH2PouQr_nibPxy_n?usp=sharing) (which belongs to the test split of the ESOT500-L dataset) and place all the downloaded directories/files in the `../data/ESOT500/ESOT500-L` directory (as detailed in [Usage/trackers-under-pytracking](#trackers-under-pytracking)) .
 
 **2.** Go to the working directory of pytracking.
 ```
@@ -445,7 +447,7 @@ export STARE_CKPTS_DIR='/your/path/to/stare_ckpts'
 bash lib/stare.sh 2>&1 | tee stare.log
 ```
 
-After this, you can use the corresponding Jupyter Notebook (Pytracking tracker:`/pytracking/analysis/analysis_results_all.ipynb` or SOTAs tracker:`/lib/test/analysis/analysis_results_demo.ipynb`) to evaluate the results.
+After this, you can use the corresponding Jupyter Notebook (PyTracking tracker:`/pytracking/analysis/analysis_results_all.ipynb` or SOTAs tracker:`/lib/test/analysis/analysis_results_demo.ipynb`) to evaluate the results.
 
 Note: Due to variations in hardware specifications (e.g., GPU models) and the configuration of extra trackers, the reproduced results may differ slightly from those reported in the paper.
 
@@ -465,4 +467,4 @@ Note: Due to variations in hardware specifications (e.g., GPU models) and the co
 
 ## Acknowledgments
 - The benchmark is built on top of the great [PyTracking](https://github.com/visionml/pytracking) library.
-- Thanks for the great works including [Stark](https://github.com/researchmm/Stark), [MixFormer](https://github.com/MCG-NJU/MixFormer), [OSTrack](https://github.com/botaoye/OSTrack) and [Event-tracking](https://github.com/ZHU-Zhiyu/Event-tracking).
+- Thanks for the great works including [Stark](https://github.com/researchmm/Stark), [MixFormer](https://github.com/MCG-NJU/MixFormer), [OSTrack](https://github.com/botaoye/OSTrack), [Event-tracking](https://github.com/ZHU-Zhiyu/Event-tracking) and [Event Contrast Maximization Library](https://github.com/TimoStoff/events_contrast_maximization).
