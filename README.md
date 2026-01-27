@@ -449,7 +449,9 @@ bash lib/stare.sh 2>&1 | tee stare.log
 
 After this, you can use the corresponding Jupyter Notebook (PyTracking tracker:`/pytracking/analysis/analysis_results_all.ipynb` or SOTAs tracker:`/lib/test/analysis/analysis_results_demo.ipynb`) to evaluate the results.
 
-Note: Due to variations in hardware specifications (e.g., GPU models) and the configuration of extra trackers, the reproduced results may differ slightly from those reported in the paper.
+Note:
+- Since `Mamba_FETrackV2` requires a different torch version, we create and activate a separate conda environment for it in the script.
+- Due to variations in hardware specifications (e.g., GPU models) and the configuration of extra trackers, the reproduced results may differ slightly from those reported in the paper.
 
 <br><br>
 
